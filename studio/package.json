@@ -2,7 +2,7 @@
   "name": "sanity0",
   "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "Tutorial per https://www.sanity.io/blog/build-your-own-blog-with-sanity-and-next-js",
   "main": "package.json",
   "author": "Manoel Valladao <valladao@gmail.com>",
   "license": "UNLICENSED",
