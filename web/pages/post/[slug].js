@@ -1,7 +1,7 @@
 // [slug].js
-
 import groq from 'groq'
 import imageUrlBuilder from '@sanity/image-url'
+import BlockContent from '@sanity/block-content-to-react'
 import client from '../../client'
 
 function urlFor (source) {
@@ -13,7 +13,8 @@ const Post = ({post}) => {
     title = 'Missing title',
     name = 'Missing name',
     categories,
-    authorImage
+    authorImage,
+    body = []
   } = post
   return (
     <article>
@@ -34,6 +35,11 @@ const Post = ({post}) => {
           />
         </div>
       )}
+      <BlockContent
+        blocks={body}
+        imageOptions={{ w: 320, h: 240, fit: 'max' }}
+        {...client.config()}
+      />
     </article>
   )
 }
@@ -42,9 +48,9 @@ const query = groq`*[_type == "post" && slug.current == $slug][0]{
   title,
   "name": author->name,
   "categories": categories[]->title,
-  "authorImage": author->image
+  "authorImage": author->image,
+  body
 }`
-
 export async function getStaticPaths() {
   const paths = await client.fetch(
     groq`*[_type == "post" && defined(slug.current)][].slug.current`
